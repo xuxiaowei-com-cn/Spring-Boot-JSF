@@ -14,12 +14,16 @@ import javax.servlet.ServletContext;
  * JSF 配置
  *
  * @author xuxiaowei
+ * @since 0.0.1
  */
 @Configuration
 public class ViewConfiguration implements ServletContextAware {
 
     public static final String SCOPE = "View";
 
+    /**
+     * 视图解析注册为 Bean
+     */
     @Bean
     public static CustomScopeConfigurer viewScope() {
         CustomScopeConfigurer configurer = new CustomScopeConfigurer();
@@ -33,6 +37,9 @@ public class ViewConfiguration implements ServletContextAware {
         return configurer;
     }
 
+    /**
+     * 自定义需要解析的 FacesServlet 后缀名注册为 Bean
+     */
     @Bean
     public ServletRegistrationBean<FacesServlet> servletRegistrationBean() {
         FacesServlet facesServlet = new FacesServlet();
@@ -41,8 +48,12 @@ public class ViewConfiguration implements ServletContextAware {
         return servletRegistrationBean;
     }
 
+    /**
+     * 配置 Servlet 初始化
+     */
     @Override
     public void setServletContext(ServletContext servletContext) {
+        // Caused by: java.lang.IllegalStateException: Could not find backup for factory javax.faces.context.FacesContextFactory.
         servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
         servletContext.setInitParameter("javax.faces.FACELETS_SKIP_COMMENTS", Boolean.TRUE.toString());
     }

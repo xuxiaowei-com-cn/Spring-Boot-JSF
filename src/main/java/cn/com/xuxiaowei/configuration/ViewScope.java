@@ -11,10 +11,12 @@ import java.util.Map;
  * 视图
  *
  * @author xuxiaowei
+ * @since 0.0.1
  */
 public class ViewScope implements Scope {
 
     @Override
+    @SuppressWarnings("all")
     public Object get(String name, ObjectFactory<?> objectFactory) {
         FacesContext currentInstance = FacesContext.getCurrentInstance();
         UIViewRoot viewRoot = currentInstance.getViewRoot();
@@ -29,6 +31,7 @@ public class ViewScope implements Scope {
     }
 
     @Override
+    @SuppressWarnings("all")
     public Object remove(String name) {
         FacesContext currentInstance = FacesContext.getCurrentInstance();
         UIViewRoot viewRoot = currentInstance.getViewRoot();
@@ -37,11 +40,13 @@ public class ViewScope implements Scope {
     }
 
     @Override
+    @SuppressWarnings("all")
     public void registerDestructionCallback(String name, Runnable callback) {
 
     }
 
     @Override
+    @SuppressWarnings("all")
     public Object resolveContextualObject(String key) {
         return null;
     }
