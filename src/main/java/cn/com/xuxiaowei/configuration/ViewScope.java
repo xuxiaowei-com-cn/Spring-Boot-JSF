@@ -18,14 +18,18 @@ public class ViewScope implements Scope {
     @Override
     @SuppressWarnings("all")
     public Object get(String name, ObjectFactory<?> objectFactory) {
-        FacesContext currentInstance = FacesContext.getCurrentInstance();
-        UIViewRoot viewRoot = currentInstance.getViewRoot();
-        Map<String, Object> viewMap = viewRoot.getViewMap();
-        if (viewMap.containsKey(name)) {
-            return viewMap.get(name);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Object object = objectFactory.getObject();
+        if (facesContext != null) {
+            UIViewRoot viewRoot = facesContext.getViewRoot();
+            Map<String, Object> viewMap = viewRoot.getViewMap();
+            if (viewMap.containsKey(name)) {
+                return viewMap.get(name);
+            } else {
+                viewMap.put(name, object);
+                return object;
+            }
         } else {
-            Object object = objectFactory.getObject();
-            viewMap.put(name, object);
             return object;
         }
     }
